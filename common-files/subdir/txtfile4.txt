@@ -1,0 +1,6 @@
+Go, Zig, and Rust each target different niches in systems programming, with Go emphasizing simplicity and rapid development while making some tradeoffs. 
+Go's garbage collection and built-in concurrency features (goroutines and channels) make it exceptionally productive for writing networked services and cloud infrastructure, with quick compilation times and excellent tooling support. However, compared to Rust and Zig, Go provides less control over memory management and has higher runtime overhead due to its garbage collector. 
+Rust offers superior memory safety through its ownership model and compile-time checks, alongside zero-cost abstractions, making it ideal for systems where performance and safety are critical - though this comes at the cost of a steeper learning curve and longer compilation times. 
+Zig positions itself as a middle ground, offering manual memory management like Rust but with a simpler learning curve, comptime features for zero-overhead abstractions, and excellent C interoperability. 
+However, Zig lacks Go's mature ecosystem and Rust's memory safety guarantees, and its relatively young age means fewer libraries and tools are available. 
+In practice, Go excels in cloud services and networked applications, Rust in performance-critical systems requiring memory safety, and Zig in scenarios needing low-level control with C interop.
