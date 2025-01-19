@@ -10,8 +10,6 @@ func main() {
 	// getting only the filenames from the command
 	filenames := os.Args[1:]
 
-	log.Println(filenames)
-
 	for _, filename := range filenames {
 		go readFile(filename)
 	}
@@ -27,4 +25,7 @@ func readFile(filename string) {
 
 	stringifiedFileContent := string(fileContent)
 	log.Println(stringifiedFileContent)
+
 }
+
+// go run catfiles.go ~/vim-notes.txt ~/test.sql
