@@ -19,7 +19,6 @@ func main() {
 	}
 
 	for _, file := range files {
-		log.Printf("file: %v, isFile: %v\n", file.Name(), !file.IsDir())
 		if !file.IsDir() {
 			fullPath := filepath.Join(directory, file.Name())
 			go searchFile(searchTerm, fullPath)
@@ -45,4 +44,6 @@ func searchFile(searchTerm string, filename string) {
 	}
 }
 
-// go run grepdir.go go ~/
+// go run grepdir.go {searchTerm} {directory}
+
+// go run grepdir.go a ../../../common-files
