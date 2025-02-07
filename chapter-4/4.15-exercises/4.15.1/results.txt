@@ -1,0 +1,28 @@
+main goroutine: 5
+main goroutine: 5
+countdown goroutine: 4
+main goroutine: 5
+main goroutine: 4
+countdown goroutine: 3
+main goroutine: 4
+main goroutine: 3
+countdown goroutine: 2
+main goroutine: 3
+main goroutine: 2
+countdown goroutine: 1
+main goroutine: 2
+countdown goroutine: 0
+main goroutine: 1
+
+due to copying and properly locking and unlocking when we access the the main goroutine's
+remainingSeconds variable, sometimes there's a later value even after we've -= 1 from the shared
+memory space within the countdown goroutine.
+
+ex)
+main goroutine: 5
+countdown goroutine: 4
+main goroutine: 5
+
+When we updated the "remainingCount" variable before we call .Unlock on line 23, the value stored is "5".
+It it stored in the "remainingCount" variable, so when countdown updates the shared "count" memory space again,
+the main goroutine's "remainingCount" variable will still contain the previous value and needs to be updated.
