@@ -50,6 +50,7 @@ func matchRecorder(matchEvents *[]string, mutex *sync.RWMutex) {
 }
 
 func clientHandler(matchEvents *[]string, mutex *sync.RWMutex, startTime time.Time) {
+	// for each client, do 100 updates
 	for i := 0; i < 100; i++ {
 		/*
 			when a goroutine tries to acquire a Read lock and there's only other Read locks acquired, then
