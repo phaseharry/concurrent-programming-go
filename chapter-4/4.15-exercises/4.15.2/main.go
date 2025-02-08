@@ -1,6 +1,24 @@
 package main
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	rwMutex := ReadWriteMutex{}
+	fmt.Println("Acquiring Readlock")
+	rwMutex.ReadLock()
+	fmt.Println("Acquiring Readlock again")
+	rwMutex.ReadLock()
+	fmt.Println("Trying Readlock", rwMutex.TryReadLock())
+	fmt.Println("Trying Writelock", rwMutex.TryWriteLock())
+	rwMutex.ReadUnlock()
+	rwMutex.ReadUnlock()
+	rwMutex.ReadUnlock()
+	fmt.Println("Trying Writelock", rwMutex.TryWriteLock())
+	fmt.Println("Trying Readlock", rwMutex.TryReadLock())
+}
 
 type ReadWriteMutex struct {
 	readersCounter int // keeps track of goroutines that have currently acquired a Read lock
@@ -55,8 +73,43 @@ func (rw *ReadWriteMutex) ReadUnlock() {
 	rw.readersLock.Unlock()
 }
 
+// add try write lock for exercise 2
 func (rw *ReadWriteMutex) TryWriteLock() bool {
 	return rw.globalLock.TryLock()
+}
+
+func (rw *ReadWriteMutex) TryReadLock() bool {
+	acquiredReadLock := rw.readersLock.TryLock()
+
+	/*
+	 wasn't able to acquire read lock, meaning another gorountine
+	 has acquired the lock to increment the readerCounter
+	*/
+	if !acquiredReadLock {
+		return false
+	}
+
+	acquiredGlobalLock := true
+	/*
+		if this is the first readersLock we're trying to acquire, we need to be able
+		to get the global lock as well so a goroutine cannot write to the shared memory space
+		the same time as we read it
+	*/
+	if rw.readersCounter == 0 {
+		acquiredGlobalLock = rw.TryWriteLock()
+	}
+
+	if acquiredGlobalLock {
+		rw.readersCounter += 1
+	}
+
+	rw.readersLock.Unlock()
+
+	/*
+	 if we were able to acquire the globalLock as well as the initial readLock (to increment the readers counter)
+	 then we know that we were able to get the readLock
+	*/
+	return acquiredGlobalLock
 }
 
 func (rw *ReadWriteMutex) WriteUnlock() {
