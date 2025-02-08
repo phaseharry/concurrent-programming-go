@@ -78,6 +78,7 @@ func (rw *ReadWriteMutex) TryWriteLock() bool {
 	return rw.globalLock.TryLock()
 }
 
+// add try read lock for exercise 3
 func (rw *ReadWriteMutex) TryReadLock() bool {
 	acquiredReadLock := rw.readersLock.TryLock()
 
