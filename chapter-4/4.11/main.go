@@ -15,7 +15,7 @@ func main() {
 
 	// set first 10000 events
 	var matchEvents = make([]string, 0, 10000)
-	for i := 0; i < 10000; i++ {
+	for range 10000 {
 		matchEvents = append(matchEvents, "match events")
 	}
 
@@ -24,7 +24,7 @@ func main() {
 	start := time.Now()
 
 	// handle 5000 clients pulling events
-	for j := 0; j < 5000; j++ {
+	for range 5000 {
 		go clientHandler(&matchEvents, &mutex, start)
 	}
 
@@ -51,7 +51,7 @@ func matchRecorder(matchEvents *[]string, mutex *sync.RWMutex) {
 
 func clientHandler(matchEvents *[]string, mutex *sync.RWMutex, startTime time.Time) {
 	// for each client, do 100 updates
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		/*
 			when a goroutine tries to acquire a Read lock and there's only other Read locks acquired, then
 			the current goroutine will not be blocked and can acquire the Read lock and gain access to the
