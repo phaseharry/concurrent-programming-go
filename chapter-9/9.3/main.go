@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"time"
 )
 
 /*
@@ -23,6 +24,7 @@ at which time consumption of messages from the quit channel will start receiving
 default int value of 0 and we stop processing
 */
 func main() {
+	startTime := time.Now()
 	quit := make(chan int)
 	defer close(quit)
 	urls := generateUrls(quit)
@@ -31,6 +33,8 @@ func main() {
 	for word := range words {
 		fmt.Println(word)
 	}
+	duration := time.Since(startTime)
+	fmt.Println("sequential page download duration:", duration)
 }
 
 func generateUrls(quit <-chan int) <-chan string {
