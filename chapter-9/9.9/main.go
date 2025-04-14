@@ -52,7 +52,7 @@ func main() {
 	   received from the 20 different downloadPages goroutines, we have a fanIn helper function that will consume messsages from
 	   all 20 channels for pageContent and pipe it into one common channel to be sent to the extractWords goroutine for further processing.
 	*/
-	fannedInChannel := fanIn(quit, pages...)
+	fannedInChannel := FanIn(quit, pages...)
 
 	results := extractWords(quit, fannedInChannel)
 	for result := range results {
@@ -108,7 +108,7 @@ func downloadPages(quit <-chan int, urls <-chan string) <-chan string {
 	return pages
 }
 
-func fanIn[K any](quit <-chan int, allChannels ...<-chan K) chan K {
+func FanIn[K any](quit <-chan int, allChannels ...<-chan K) chan K {
 	wg := sync.WaitGroup{}
 	/*
 	   since we are depending on 20 goroutines that spawn 20 channels, we can't simply listen to only
