@@ -16,7 +16,6 @@ func main() {
 		url := fmt.Sprintf("https://rfc-editor.org/rfc/rfc%d.txt", i)
 		go countWordFrequency(wordFrequency, url)
 	}
-
 	time.Sleep(time.Second * 10)
 	for word, count := range wordFrequency {
 		log.Printf("word: %v -> %d\n", word, count)
