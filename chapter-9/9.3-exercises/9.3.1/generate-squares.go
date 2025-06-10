@@ -1,18 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
-
-func main() {
-	quit := make(chan int)
-	defer close(quit)
-
-	squares := GenerateSquares(quit)
-	for val := range squares {
-		fmt.Println(val)
-	}
-}
+package exercise_9_3_1
 
 func GenerateSquares(quit <-chan int) <-chan int {
 	squaresChannel := make(chan int)
