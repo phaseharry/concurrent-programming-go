@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"6.11/barrier"
+	"github.com/phaseharry/concurrent-programming-go/chapter-6/6.11/barrier"
 )
 
 func main() {
