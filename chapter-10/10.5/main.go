@@ -110,6 +110,10 @@ func joinResults(codeDepths chan CodeDepth) chan CodeDepth {
 				max = currentFileDepth
 			}
 		}
+		/*
+		 only sending the maxDepth entry when codeDepths channel is closed and
+		 the above loop is terminated, signaling that we've gotten all depths for all file entries
+		*/
 		maxFileInDirectoryDepth <- max
 	}()
 
