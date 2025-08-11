@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
-
-	listing11_3_4 "github.com/phaseharry/concurrent-programming-go/chapter-11/11.4"
 )
 
 /*
@@ -27,11 +25,11 @@ then
 4. will be blocked since it cannot acquire a lock to Sam since 1 has it
 */
 func main() {
-	accounts := []listing11_3_4.BankAccount{
-		*listing11_3_4.NewBankAccount("Sam"),
-		*listing11_3_4.NewBankAccount("Paul"),
-		*listing11_3_4.NewBankAccount("Amy"),
-		*listing11_3_4.NewBankAccount("Mia"),
+	accounts := []BankAccount{
+		*NewBankAccount("Sam"),
+		*NewBankAccount("Paul"),
+		*NewBankAccount("Amy"),
+		*NewBankAccount("Mia"),
 	}
 
 	total := len(accounts)

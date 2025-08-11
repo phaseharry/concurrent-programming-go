@@ -1,4 +1,4 @@
-package listing11_3_4
+package main
 
 import (
 	"fmt"
@@ -19,16 +19,11 @@ func NewBankAccount(id string) *BankAccount {
 	}
 }
 
-func (src *BankAccount) Transfer(to *BankAccount, amount int, exId int) {
-	fmt.Printf("%d locking %s's account\n", exId, src.id)
-	src.mutex.Lock()
-	fmt.Printf("%d locking %s's account\n", exId, src.id)
-	to.mutex.Lock()
-
+func (src *BankAccount) Transfer(to *BankAccount, amount int, exId int, arb *Arbitrator) {
+	fmt.Printf("%d locking %s and %s\n", exId, src.id, to.id)
+	arb.LockAccounts(src.id, to.id)
 	src.balance -= amount
 	to.balance += amount
-
-	src.mutex.Unlock()
-	to.mutex.Unlock()
+	arb.UnlockAccounts(src.id, to.id)
 	fmt.Printf("%d unlocked %s and %s\n", exId, src.id, to.id)
 }
