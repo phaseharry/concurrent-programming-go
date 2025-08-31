@@ -35,6 +35,12 @@ func (s *SpinLock) Lock() {
 	*/
 	for !atomic.CompareAndSwapInt32((*int32)(s), 0, 1) {
 		runtime.Gosched()
+		/*
+			here, we are yielding the execution to allow another execution to run. The issue is that the runtime or operating system
+			does not that the current execution/goroutine is waitng for a lock to become available so it is highly likely that the current
+			execution will run more times before another execution can use CPU time. to help with this, OS provides a concept known as a futex.
+
+		*/
 	}
 }
 
