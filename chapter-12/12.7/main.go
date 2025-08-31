@@ -11,12 +11,14 @@ demo of atomic.CompareAndSwap
 
 func main() {
 	/*
-	   CompareAndSwap is an atomic operations so if it's called it will not be interrupted by
-	   other executions that's calling CompareAndSwap on the same pointer variable / memory.
-	   It takes in 3 parameters. The first parameter is the pointer to variable that will be modified
-	   by multiple executions, the second parameter is the value that is checked against and the third
-	   parameter is the value that gets assigned to that pointer location if the initial value at that
-	   location is equal to the second parameter.
+	 CompareAndSwap is an atomic operations so if it's called it will not be interrupted by
+	 other executions that's calling CompareAndSwap on the same pointer variable / memory.
+	 It takes in 3 parameters. The first parameter is the pointer to variable that will be modified
+	 by multiple executions, the second parameter is the value that is checked against and the third
+	 parameter is the value that gets assigned to that pointer location if the initial value at that
+	 location is equal to the second parameter.
+
+	 returns a boolean indicating whether or not the swap was successful or not
 	*/
 	number := int32(17)
 	result := atomic.CompareAndSwapInt32(&number, 17, 19)
